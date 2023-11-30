@@ -7,7 +7,8 @@ import mime from 'mime-types'
 
 export async function createProduct(formData) {
 
-  let formDataImages = formData.get("images").length > 0 ? formData.get("images").split(',') : [];
+  let formDataImages = JSON.parse(formData.get('images'))
+  formDataImages = formDataImages.length > 0 ? formDataImages : [];
 
   await mongooseConnect();
 
@@ -29,12 +30,13 @@ export async function editProduct(formData) {
 
   const product = await Product.findById(formData.get("_id"));
 
-  let images = formData.get("images").length > 0 ? formData.get("images").split(',') : [];
+  let formDataImages = JSON.parse(formData.get('images'))
+  formDataImages = formDataImages.length > 0 ? formDataImages : [];
 
   product.name = formData.get("name");
   product.description = formData.get("description");
   product.price = formData.get("price");
-  product.images = images;
+  product.images = formDataImages;
   
   await product.save();
 

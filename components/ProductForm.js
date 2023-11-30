@@ -32,6 +32,7 @@ export default function ProductForm({
         return [...oldImages, ...newImages]
       });
     }
+
     setIsUpLoading(false);
   }
 
@@ -48,10 +49,12 @@ export default function ProductForm({
     }
   }
 
+
+
   return (
     <form action={_id ? editProduct : createProduct}>
       <input name='_id' value={_id} hidden readOnly={true}/>
-      <input name='images' value={images} hidden readOnly={true}/>
+      <input name='images' value={JSON.stringify(images)} hidden readOnly={true}/>
       <label>Product name</label>
       <input 
         type="text"
